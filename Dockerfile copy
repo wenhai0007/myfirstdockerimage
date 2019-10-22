@@ -1,0 +1,38 @@
+FROM ubuntu
+
+#MAINTAINER wenhai
+
+#RUN yum install apt
+
+RUN yum install wget \
+    wget http://security.ubuntu.com/ubuntu/pool/main/a/apt/apt_1.4_amd64.deb \
+    sudo dpkg -i apt_1.4_amd64.deb \  
+    apt-get update \
+    apt-get install golang-go \
+    apt-get install telnet \
+    echo $GOPATH
+
+COPY hello.go $GOPATH/src/hello/
+
+WORKDIR $GOPATH/src/hello
+
+RUN go build hello.go \
+    cd / \
+    mkdir workspace \
+    cd workspace \
+    mkdir log \
+    cp $GOPATH/src/hello/hello .
+
+#ADD 
+
+ENV repo /root/go/src
+
+WORKDIR /workspace
+
+#CMD 
+
+ENTRYPOINT /bin/bash run.sh
+
+
+#VOLUME
+
